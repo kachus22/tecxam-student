@@ -1,0 +1,21 @@
+<app-navbar></app-navbar>
+<p>
+  quiz works!
+</p>
+
+<div class="progress">
+    <div class="determinate" [style.width.%]="percentage"></div>
+</div>
+
+<ngu-carousel #myCarousel [inputs]="carouselConfig" [dataSource]="carouselItems" (change)="test()">
+  <div *nguCarouselDef="let item;" class="item">
+    <div class="tile">{{item}}
+        <br> a <br> b <br> c <br> d <br>
+    </div>
+  </div>
+  <button NguCarouselNext class="rightRs">></button>
+  <button NguCarouselPrev class="leftRs"><</button>
+  <ul class="myPoint" NguCarouselPoint>
+    <li *ngFor="let j of myCarousel.pointNumbers; let j = index" [class.active]="j==myCarousel.activePoint" (click)="myCarousel.moveTo(j)"></li>
+  </ul>
+</ngu-carousel>
