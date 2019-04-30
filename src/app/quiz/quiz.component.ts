@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NguCarousel, NguCarouselConfig } from '@ngu/carousel';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quiz',
@@ -17,7 +17,7 @@ export class QuizComponent implements OnInit, AfterViewInit {
   zoom = false;
   selectedImage = '';
   percentage;
-  time = "";
+  time = null;
 
   @ViewChild('myCarousel') myCarousel: NguCarousel<any>;
   carouselConfig: NguCarouselConfig = {
@@ -28,14 +28,6 @@ export class QuizComponent implements OnInit, AfterViewInit {
     touch: true,
     velocity: 0.2
   }
-
-  test = `<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-  <div class="example-box" *ngFor="let movie of movies" cdkDrag>
-    {{movie.title}}
-    <img *cdkDragPreview [src]="movie.poster" [alt]="movie.title">
-  </div>
-</div>`;
-  // carouselItems = [this.test, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   carouselItems = [
     { number: 6,
@@ -67,7 +59,7 @@ export class QuizComponent implements OnInit, AfterViewInit {
   ]
 
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, private route: Router) {}
 
   ngOnInit(){
   }
@@ -102,8 +94,17 @@ export class QuizComponent implements OnInit, AfterViewInit {
   }
 
   startExam() {
+    this.carouselItems.push({ number: 11,
+      type: 10,
+      question: "Listo para enviar",
+      answers: []
+    })
     this.started = true;
     this.startTimer();
+  }
+
+  submitExam(){
+    this.route.navigateByUrl('/result');
   }
 
   zoomIn(image){
@@ -114,28 +115,4 @@ export class QuizComponent implements OnInit, AfterViewInit {
   zoomOut(){
     this.zoom = false;
   }
-
-  movies = [
-    {
-      title: 'Episode I - The Phantom Menace',
-      poster: 'https://upload.wikimedia.org/wikipedia/en/4/40/Star_Wars_Phantom_Menace_poster.jpg'
-    },
-    {
-      title: 'Episode II - Attack of the Clones',
-      poster: 'https://upload.wikimedia.org/wikipedia/en/3/32/Star_Wars_-_Episode_II_Attack_of_the_Clones_%28movie_poster%29.jpg'
-    },
-    {
-      title: 'Episode III - Revenge of the Sith',
-      poster: 'https://upload.wikimedia.org/wikipedia/en/9/93/Star_Wars_Episode_III_Revenge_of_the_Sith_poster.jpg'
-    },
-    {
-      title: 'Episode IV - A New Hope',
-      poster: 'https://upload.wikimedia.org/wikipedia/en/8/87/StarWarsMoviePoster1977.jpg'
-    }
-  ];
-
-  drop(event: CdkDragDrop<{title: string, poster: string}[]>) {
-    moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
-  }
-
 }

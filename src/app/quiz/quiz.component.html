@@ -78,6 +78,10 @@
                           {{a}}
                         </mat-list-option>
                     </mat-selection-list> -->
+                    <div *ngIf="item.type == 10" class="example-radio-group" >
+                        <h4>{{item.question}}</h4><br>
+                        <button class="btn btn-large btn-submit" (click)="submitExam()">Terminar</button>
+                    </div>
                 </div>
             </div>
             <ul class="myPoint" NguCarouselPoint>
