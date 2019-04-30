@@ -2,6 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { NguCarouselModule } from '@ngu/carousel';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatListModule, MatRadioModule, MatCheckboxModule } from '@angular/material';
+import { PinchZoomModule } from 'ngx-pinch-zoom';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,7 +29,13 @@ import { RoomComponent } from './room/room.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NguCarouselModule
+    NguCarouselModule,
+    BrowserAnimationsModule,
+    DragDropModule,
+    MatListModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    PinchZoomModule
   ],
   providers: [],
   bootstrap: [AppComponent]

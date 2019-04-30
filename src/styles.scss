@@ -1,1 +1,68 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+
+html, body
+{
+    height: 100vh;
+}
+
+.fix-overflow {
+    overflow-x: hidden;
+}
+
+section {
+    overflow-x: hidden; //horizontal
+    height: 100%;
+    > .row {
+        margin-bottom: 0;
+        height: 100%;
+        > .col {
+            height: 100%;
+        }
+    }
+}
+
+.card-full, .card-full-nav {
+    margin: .5rem 0 .5rem 0;
+    display: flex;
+    flex-flow: vertical wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-full {
+    height: calc(100% - 14px);
+}
+
+.card-full-nav {
+    height: calc(100% - 72px);
+    margin-top: 65px;
+}
+
+.card-full-nav-2 {
+    height: fit-content;
+    margin-top: 80px;
+}
+
+.card-full-nav-3 {
+    height: fit-content;
+    margin-top: 115px;
+}
+
+.card-action {
+    display: flex;
+    flex-flow: vertical wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.m-4{
+    margin-top: 5px;
+    margin-left: 5px;
+}
+

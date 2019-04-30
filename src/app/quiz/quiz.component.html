@@ -1,21 +1,96 @@
 <app-navbar></app-navbar>
-<p>
-  quiz works!
-</p>
-
-<div class="progress">
-    <div class="determinate" [style.width.%]="percentage"></div>
-</div>
-
-<ngu-carousel #myCarousel [inputs]="carouselConfig" [dataSource]="carouselItems" (change)="test()">
-  <div *nguCarouselDef="let item;" class="item">
-    <div class="tile">{{item}}
-        <br> a <br> b <br> c <br> d <br>
+<section [ngClass]="{'show': !started, 'hide': started}">
+  <div class="row">
+    <div class="col s12">
+        <!-- blue-grey darken-1 -->
+      <div class="card card-full-nav">
+          <!-- white-text -->
+        <div class="card-content ">
+          <span class="card-title">ESTEREOISOMERÍA ÓPTICA DE MOLECULAS ORGANICAS</span>
+          <p>Los estereoisómeros son compuestos que se forman por el mismo tipo y numero de átomos unidos en la misma secuencia, pero con distinta disposición espacial. (Conocimiento de la estructura de una molécula).
+            Existen dos tipos de estereoisómeros: los isómeros geométricos y los isómeros ópticos.</p>
+          <br>
+          <p>Duración: 20 min</p>
+          <br>
+          <div class="card-action">
+            <button class="btn btn-large btn-submit" (click)="startExam()">Empezar</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <button NguCarouselNext class="rightRs">></button>
-  <button NguCarouselPrev class="leftRs"><</button>
-  <ul class="myPoint" NguCarouselPoint>
-    <li *ngFor="let j of myCarousel.pointNumbers; let j = index" [class.active]="j==myCarousel.activePoint" (click)="myCarousel.moveTo(j)"></li>
-  </ul>
-</ngu-carousel>
+</section>
+<div class="fix-overflow">
+  <div class="row">
+    <div class="col s12 fixed">
+      <div class="card card-full-nav-2">
+        <span class="card-title m-4">Tiempo restante: {{time}}
+          <div class="progress">
+            <div class="determinate" [style.width.%]="percentage"></div>
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+        <ngu-carousel class="card-full-nav-3" #myCarousel [inputs]="carouselConfig" [dataSource]="carouselItems" (onMove)="onChange($event)">
+            <div *nguCarouselDef="let item; let i = index" class="item">
+                <div class="tile">
+                  <!-- {{i}} -->
+                    <mat-radio-group *ngIf="item.type == 1"
+                      aria-labelledby="example-radio-group-label"
+                      class="example-radio-group"
+                      >
+                      <h4>{{item.question}}</h4><br>
+                      <mat-radio-button class="example-radio-button" *ngFor="let a of item.answers" [value]="a">
+                        {{a}}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                    <mat-radio-group *ngIf="item.type == 2"
+                      aria-labelledby="example-radio-group-label"
+                      class="example-radio-group"
+                      >
+                      <h4>{{item.question}}</h4><br>
+                      <mat-radio-button class="example-radio-button" *ngFor="let a of item.answers" [value]="a">
+                        {{a}}
+                      </mat-radio-button>
+                      <img class="answer-image" src="{{item.image}}" alt="" (click)="zoomIn(item.image)">
+                    </mat-radio-group>
+    
+                    <mat-radio-group *ngIf="item.type == 3"
+                      aria-labelledby="example-radio-group-label"
+                      class="example-radio-group"
+                      >
+                      <h4>{{item.question}}</h4><br>
+                      <mat-radio-button class="example-radio-button" *ngFor="let a of item.answers" [value]="a">
+                        <img class="answer-image" src="{{a}}" alt="" (click)="zoomIn(a)">
+                      </mat-radio-button>
+                    </mat-radio-group>
+                    <div *ngIf="item.type == 4" class="example-radio-group" >
+                        <h4>{{item.question}}</h4><br>
+                        <mat-checkbox *ngFor="let a of item.answers" class="example-radio-button">{{a}}</mat-checkbox>
+                    </div>
+                    <!-- <mat-selection-list *ngIf="item.type == 4">
+                        <h4>{{item.question}}</h4><br>
+                        <mat-list-option *ngFor="let a of item.answers" checkboxPosition="before">
+                          {{a}}
+                        </mat-list-option>
+                    </mat-selection-list> -->
+                </div>
+            </div>
+            <ul class="myPoint" NguCarouselPoint>
+              <li *ngFor="let j of myCarousel.pointNumbers; let j = index" [class.active]="j==myCarousel.activePoint" (click)="myCarousel.moveTo(j)"></li>
+            </ul>
+            </ngu-carousel>
+    </div>
+  </div>
+</div>
+
+<div class="zoom" *ngIf="zoom">
+    <button class="btn btn-large btn-submit" (click)="zoomOut()">X</button>
+    <pinch-zoom [zoom-button]="true">
+        <img src="{{selectedImage}}" alt="">
+    </pinch-zoom>
+</div>
