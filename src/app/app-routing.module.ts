@@ -7,8 +7,8 @@ import { ResultComponent } from './result/result.component';
 
 const routes: Routes = [
   { path: 'room', component: RoomComponent},
-  { path: 'user', component: UserComponent},
-  { path: 'quiz', component: QuizComponent},
+  { path: ':id/user', component: UserComponent},
+  { path: ':id/:id/quiz', component: QuizComponent},
   { path: 'result', component: ResultComponent},
   { path: '', redirectTo:'room', pathMatch:'full'},
 ];

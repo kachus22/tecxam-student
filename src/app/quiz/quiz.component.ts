@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NguCarousel, NguCarouselConfig } from '@ngu/carousel';
 import { Router } from '@angular/router';
+import { RoomService } from '../shared/room.service';
+import { QuizService } from '../shared/quiz.service';
 
 @Component({
   selector: 'app-quiz',
@@ -53,16 +55,34 @@ export class QuizComponent implements OnInit, AfterViewInit {
     }
   ];
 
-  carouselAnswers = [
-    null,
-    null
-  ]
+  answers = [];
+
+  doneAns = [];
+
+  roomId: string;
+  studentId: string;
+  courseId: string;
+  examId: string;
+
+  exam: any = {
+    name: "",
+    desc: "",
+    time: ""
+  };
 
 
-  constructor(private cdr: ChangeDetectorRef, private route: Router) {}
+  constructor(private cdr: ChangeDetectorRef, private route: Router, public roomService: RoomService,
+    public quizService: QuizService) {}
 
   ngOnInit(){
+    let ids = window.location.pathname.match(/\d+/g);
+    this.roomId = ids[0];
+    this.studentId = ids[1];
+    
+    this.checkRoom();
   }
+
+
 
   onChange(e){
     this.percentage = 100 / this.carouselItems.length * (e.currentSlide + 1);
@@ -82,11 +102,12 @@ export class QuizComponent implements OnInit, AfterViewInit {
   }
 
   startTimer() {
-    let seconds = 900;
+    let seconds = this.exam.time*60;
     setInterval(() => {
       seconds--;
-      this.time = this.displayTimeElapsed(seconds)
+      setTimeout(() => this.time = this.displayTimeElapsed(seconds), 0);
     }, 1000);
+    
   }
 
   displayTimeElapsed(seconds){
@@ -100,6 +121,10 @@ export class QuizComponent implements OnInit, AfterViewInit {
       answers: []
     })
     this.started = true;
+    for(let i = 0; i < this.carouselItems.length; i++) {
+      this.answers.push({ });
+      this.doneAns.push(false);
+    }
     this.startTimer();
   }
 
@@ -114,5 +139,51 @@ export class QuizComponent implements OnInit, AfterViewInit {
 
   zoomOut(){
     this.zoom = false;
+  }
+
+  moveToQuestion(index){
+    this.myCarousel.moveTo(index, true);
+  }
+
+  selectAns(q, a, value){
+    this.answers[q].a = value;
+    this.doneAns[q] = true;
+    let t = Object.keys(this.answers[q]).length;
+    console.log(t);
+  }
+
+  checkRoom(){
+    this.roomService.room(this.roomId)
+      .subscribe(
+        (result:any) => {
+          this.exam = {
+            name: result.name,
+            desc: result.description,
+            time: result.time_limit
+          }
+          this.courseId = result.course_id;
+          this.examId = result.id;
+
+          this.quizService.fill(this.courseId, this.examId)
+            .subscribe(
+              (result:any) => {
+                console.log(' asd', result);
+                // this.exam = {
+                //   name: result.name,
+                //   desc: result.description,
+                //   time: result.time_limit
+                // }
+              },
+              (error) => {
+                console.error(error);
+              }
+            );
+
+        },
+        (error) => {
+          this.route.navigateByUrl(`room`);
+          // console.error(error);
+        }
+      );
   }
 }

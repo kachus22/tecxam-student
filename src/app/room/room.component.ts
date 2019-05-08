@@ -10,28 +10,29 @@ import { NgForm } from '@angular/forms';
 })
 export class RoomComponent implements OnInit {
 
-  constructor(private roomService: RoomService, private route: Router) { }
+  constructor(public roomService: RoomService, private route: Router) { }
 
   ngOnInit() {
   }
 
   onSubmit(form: NgForm){
-
-    console.log('asdasd');
-    // let postBody = { user: {email: f.value.email_inline}}
-  //   this.roomService.login(postBody)
-  //     .subscribe(
-  //       (result) => {
-  //         localStorage.setItem('email', f.value.user);
-  //         localStorage.setItem('authorization', result.headers.get('authorization'));
-  //         this.success.emit(true);
-  //       },
-  //       (error) => {
-  //         console.error(error);
-  //         this.success.emit(false);
-  //       }
-  //     );
-    this.route.navigateByUrl('/user');
+    // let postBody = { token: form.value.roomId }
+    let postBody = form.value.roomId;
+    console.log(postBody)
+    this.roomService.room(postBody)
+      .subscribe(
+        (result) => {
+          this.route.navigateByUrl(`${postBody}/user`);
+          // localStorage.setItem('email', f.value.user);
+          // localStorage.setItem('authorization', result.headers.get('authorization'));
+          // this.success.emit(true);
+        },
+        (error) => {
+          console.log(error)
+          // console.error(error);
+          // this.success.emit(false);
+        }
+      );
   
   }
 

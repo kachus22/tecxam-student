@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from './base.service';
+import { BaseService } from './base/base.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +8,11 @@ export class QuizService {
 
   constructor(public base: BaseService) { }
 
-  login(postBody: any) {
-    return this.base.post('login', postBody);
-    // return this.base.postResponse('login', postBody);
+  fill(cid: string, eid: string) {
+    return this.base.get(`courses/${cid}/exams/${eid}/random_questions`);
   }
 
-  isLogged(){
-    return localStorage.getItem('authorization') != null;
+  attempt(postBody: any) {
+    return this.base.post(`attempt`, postBody);
   }
 }

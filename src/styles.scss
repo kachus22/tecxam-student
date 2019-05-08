@@ -14,6 +14,7 @@ html, body
 section {
     overflow-x: hidden; //horizontal
     height: 100%;
+    width: 100%;
     > .row {
         margin-bottom: 0;
         height: 100%;
@@ -42,12 +43,17 @@ section {
 
 .card-full-nav-2 {
     height: fit-content;
-    margin-top: 80px;
+    margin-top: 20px;
 }
 
 .card-full-nav-3 {
     height: fit-content;
-    margin-top: 115px;
+    margin-top: 125px;
+}
+
+.card-full-nav-4 {
+    height: fit-content;
+    margin-top: 60px;
 }
 
 .card-action {

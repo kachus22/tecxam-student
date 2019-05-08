@@ -81,7 +81,7 @@
     transition: .4s ease all;
 }
 .myPoint  li.active {
-    background: #909090;
+    background: #26a69a;
     width: 10px;
 }
 
@@ -149,4 +149,24 @@
     height: 40%;
     width: 40%;
   }
+
+  .opac {
+    opacity: 0 !important;
+  }
   
+#answerStatus {
+  display: flex; 
+  justify-content:center;
+  white-space:nowrap;
+  overflow: scroll;
+  padding-top: 8px;
+  li {
+    cursor: pointer;
+    list-style-type: none;
+    padding: 0 15px;
+    margin-right: 10px;
+    display: inline;
+    background: #e0e0e0;
+    border: solid black 0.5px;
+  }
+}

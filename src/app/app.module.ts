@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatListModule, MatRadioModule, MatCheckboxModule } from '@angular/material';
 import { PinchZoomModule } from 'ngx-pinch-zoom';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,8 @@ import { QuizComponent } from './quiz/quiz.component';
 import { ResultComponent } from './result/result.component';
 import { FormsModule } from '@angular/forms';
 import { RoomComponent } from './room/room.component';
+import { BaseService } from './shared/base/base.service';
+import { QuizService } from './shared/quiz.service';
 
 @NgModule({
   declarations: [
@@ -35,9 +38,12 @@ import { RoomComponent } from './room/room.component';
     MatListModule,
     MatRadioModule,
     MatCheckboxModule,
-    PinchZoomModule
+    PinchZoomModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    BaseService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
